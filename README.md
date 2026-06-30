@@ -1,93 +1,466 @@
-# Lbaw2486
+# LBAW's framework
+
+## Introduction
+
+This README describes how to set up the development environment for LBAW.
+
+These instructions address the development with a local environment (with PHP installed) and Docker containers for PostgreSQL and pgAdmin.
+
+- [LBAW's framework](#lbaws-framework)
+  - [Introduction](#introduction)
+  - [Installing the software dependencies](#installing-the-software-dependencies)
+  - [Setting up the development repository](#setting-up-the-development-repository)
+  - [Installing local PHP dependencies](#installing-local-php-dependencies)
+  - [Working with PostgreSQL](#working-with-postgresql)
+  - [Developing the project](#developing-the-project)
+  - [Laravel code structure](#laravel-code-structure)
+    - [1) Routes](#1-routes)
+    - [2) Controllers](#2-controllers)
+    - [3) Database and Models](#3-database-and-models)
+    - [4) Policies](#4-policies)
+    - [5) Views](#5-views)
+    - [6) CSS](#6-css)
+    - [7) JavaScript](#7-javascript)
+    - [8) Configuration](#8-configuration)
+  - [Publishing your image](#publishing-your-image)
+  - [Testing your image](#testing-your-image)
 
 
+## Installing the software dependencies
 
-## Getting started
+To prepare your computer for development, you need to install:
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+* [PHP](https://www.php.net/) version 8.3 or higher
+* [Composer](https://getcomposer.org/) version 2.2 or higher
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+We recommend using an **Ubuntu** distribution (24.04 or newer) that ships with these versions.
 
-## Add your files
+Install the required software with:
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+```bash
+sudo apt update
+sudo apt install git composer php8.3 php8.3-mbstring php8.3-xml php8.3-pgsql php8.3-curl
+```
+
+On macOS, install using [Homebrew](https://brew.sh/):
+
+```bash
+brew install php@8.3 composer
+```
+
+If you use [Windows WSL](https://learn.microsoft.com/en-us/windows/wsl/install), ensure you are using Ubuntu 24.04 inside WSL. Previous versions do not provide the required packages. After setting up WSL, follow the Ubuntu instructions above.
+
+
+## Setting up the development repository
+
+**Important**: Only one group member should perform these steps.
+
+First, ensure you have both repositories in the same folder:
+
+* Your group's repository
+* The demo repository (template-laravel)
+
+Follow these steps to set up your development environment:
+
+```bash
+# Clone your group repository
+# Replace YYYY with the year (e.g., 2024) and XX with your group number
+git clone https://gitlab.up.pt/lbaw/lbawYYYY/lbawYYXX.git
+
+# Clone the LBAW project skeleton
+git clone https://gitlab.up.pt/lbaw/template-laravel.git
+
+# Remove the Git folder from the demo folder
+rm -rf template-laravel/.git
+
+# Preserve the existing README.md
+mv template-laravel/README.md template-laravel/README_lbaw.md
+
+# Go to your repository
+cd lbawYYXX
+
+# Switch to main branch
+git checkout main
+
+# Copy all demo files
+cp -r ../template-laravel/. .
+
+# Add the new files to your repository
+git add .
+git commit -m "Base Laravel structure"
+git push origin main
+```
+
+After these steps:
+
+1. You'll have the project skeleton in your local machine
+2. You can remove the `template-laravel` directory
+
+For team collaboration:
+
+1. Only one group member should perform the above steps and push changes
+2. Other group members should then clone the updated repository:
+
+```bash
+git clone https://gitlab.up.pt/lbaw/lbawYYYY/lbawYYXX.git
+```
+
+3. Each group member must create their own `.env` file:
+
+```bash
+cp .env.thingy .env
+```
+
+The `.env` file contains configuration settings and is not tracked by Git (see [.gitignore](.gitignore)).
+
+
+## Installing local PHP dependencies
+
+After setting up your repository, install all local dependencies required for development:
+
+```bash
+composer update
+```
+
+If the installation fails:
+
+1. Check your Composer version (should be 2 or above): `composer --version`
+2. If you see errors about missing PHP extensions, ensure they are enabled in your [php.ini file](https://www.php.net/manual/en/configuration.file.php) file
+
+
+## Working with PostgreSQL
+
+The _Docker Compose_ file provided sets up **PostgreSQL** and **pgAdmin4** as local Docker containers.
+
+Start the containers from your project root:
+
+```bash
+docker compose up -d
+```
+
+Stop the containers when needed:
+
+```bash
+docker compose down
+```
+
+Open your browser and navigate to `http://localhost:4321` to access pgAdmin4.
+
+Depending on your installation setup, you might need to use the IP address from the virtual machine providing docker instead of `localhost`.
+
+On first use, add a local database connection with these settings:
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.up.pt/lbaw/lbaw2425/lbaw2486.git
-git branch -M main
-git push -uf origin main
+hostname: postgres
+username: postgres
+password: pg!password
 ```
 
-## Integrate with your tools
+Use `postgres` as hostname (not `localhost`) because _Docker Compose_ creates an internal DNS entry for container communication.
 
-- [ ] [Set up project integrations](https://gitlab.up.pt/lbaw/lbaw2425/lbaw2486/-/settings/integrations)
 
-## Collaborate with your team
+## Developing the project
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+You're all set up to start developing the project.
+The provided skeleton includes a basic todo list application -- **Thingy**, which you'll modify to implement your project.
 
-## Test and Deploy
+Start the development server from your project root:
 
-Use the built-in continuous integration in GitLab.
+```bash
+# Seed database from the SQL file
+# Required: first run and after database script changes
+php artisan db:seed
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+# Start the development server
+php artisan serve
+```
 
-***
+Access the application at `http://localhost:8000`
 
-# Editing this README
+* Username: admin@example.com
+* Password: 1234
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+These credentials are created when seeding the database.
 
-## Suggestions for a good README
+To stop the server: Press `Ctrl-C`
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
 
-## Name
-Choose a self-explaining name for your project.
+## Laravel code structure
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+Before you start, familiarize yourself with [Laravel's documentation](https://laravel.com/docs/10.x).
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+A typical web request in Laravel involves several components. Here are the key concepts.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+### 1) Routes
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+Laravel processes web pages through its [routing](https://laravel.com/docs/10.x/routing) mechanism.
+Routes are defined in `routes/web.php`. Example:
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+```php
+Route::get('cards/{id}', [CardController::class, 'show']);
+```
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+This route:
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+* Handles GET requests to `cards/{id}`
+* Uses the parameter `id`
+* Calls the `show` method of `CardController`
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+### 2) Controllers
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+[Controllers](https://laravel.com/docs/10.x/controllers) group related request handling logic into a single class.
+Controllers are normally defined in the `app/Http/Controllers` folder.
 
-## License
-For open source projects, say how it is licensed.
+```php
+class CardController extends Controller
+{
+    /**
+     * Show the card for a given id
+     */
+    public function show(string $id): View
+    {
+        // Get the card.
+        $card = Card::findOrFail($id);
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+        // Check if the current user can see (show) the card
+        $this->authorize('show', $card);
+
+        // Use the pages.card template to display the card
+        return view('pages.card', [
+            'card' => $card
+        ]);
+    }
+}
+```
+
+This particular controller contains a `show` method that:
+
+* Receives an `id` from a route
+* Searches for a card in the database
+* Checks if the user has permission to view the card
+* Returns a view with the card data
+
+
+### 3) Database and Models
+
+To access the database, we will use the query builder capabilities of [Eloquent](https://laravel.com/docs/10.x/eloquent) but the initial database seeding will still be done using raw SQL (the script that creates the tables can be found in `database/thingy-seed.sql`).
+
+One important aspect is that **we won't be using migrations in LBAW projects**.
+
+Here is an example of Eloquent's query building syntax:
+
+```php
+$card = Card::findOrFail($id);
+```
+
+This line tells Eloquent to fetch a card from the database with a certain `id` (the primary key of the table).
+The result will be an object of the class `Card` defined in `app/Models/Card.php`.
+This class extends the `Model` class and contains information about the relation between the `card` tables and other tables:
+
+```php
+/**
+ * Get the user that owns the card
+ */
+public function user(): BelongsTo
+{
+    return $this->belongsTo(User::class);
+}
+
+/**
+ * Get the items for the card
+ */
+public function items(): HasMany
+{
+    return $this->hasMany(Item::class);
+}
+```
+
+### 4) Policies
+
+[Policies](https://laravel.com/docs/10.x/authorization#writing-policies) define which actions a user can take.
+You can find policies inside the `app/Policies` folder.
+For example, in the `CardPolicy.php` file we defined a `show` method that only allows a certain user to view a card if that user is the card owner:
+
+```php
+/**
+ * Determine if a given card can be shown to a user
+ */
+public function show(User $user, Card $card): bool
+{
+    // Only a card owner can see a card.
+    return $user->id === $card->user_id;
+}
+```
+
+In this example:
+
+* `$user` and `$card` are models that represent their respective tables
+* `$id` and `$user_id` are columns automatically mapped into those models
+
+To use this policy inside the `CardController`:
+
+```php
+$this->authorize('show', $card);
+```
+
+As you can see, there is no need to pass the current user.
+
+If you name the controllers following the expected pattern (e.g., `CardPolicy` for the `Card` model), Laravel will [auto-discover the policies](https://laravel.com/docs/10.x/authorization#policy-auto-discovery). If you do not use the expected naming pattern, you will need to manually register the policies ([see the documentation](https://laravel.com/docs/10.x/authorization#registering-policies)).
+
+
+### 5) Views
+
+A controller only needs to return HTML code for it to be sent to the browser.
+However we will be using [Blade](https://laravel.com/docs/10.x/blade) templates to make this task easier:
+
+```php
+return view('pages.card', ['card' => $card]);
+```
+
+In this example:
+
+* `pages.card` refers to a blade template at `resources/views/pages/card.blade.php`
+* The second parameter contains the data we are injecting into the template
+
+Templates can extend other templates:
+
+```php
+@extends('layouts.app')
+```
+
+The base template (`resources/views/layouts/app.blade.php`) serves as the foundation for all pages.
+Inside this template, the place where the page template is introduced is identified by the following command:
+
+```php
+@yield('content')
+```
+
+Besides the `pages` and `layouts` template folders, we also have a `partials` folder where small snippets of HTML code can be saved to be reused in other pages.
+
+
+### 6) CSS
+
+The easiest way to use CSS is just to edit the CSS file found at `public/css/app.css`.
+You can have multiple CSS files to better organize your style definitions.
+
+
+### 7) JavaScript
+
+To add JavaScript into your project, just edit the file found at `public/js/app.js`.
+
+
+### 8) Configuration
+
+Laravel configurations are acquired from environment variables through:
+
+* The environment where Laravel process starts
+* The `.env` file in the project root
+
+The `.env` file can set or override environment variables from the current context.
+You will need to update these variables, especially those for database access (prefixed with `DB_`).
+
+**Important**: You must manually create a schema that matches your group's username.
+
+Environment Files:
+
+* `.env`: Use for local development
+* `.env.production`: Bundled with Docker image, uses production database
+
+Note that you can use the remote database locally by updating your `.env` file accordingly.
+
+If you change the configuration, clear Laravel's cache with:
+
+```bash
+php artisan route:clear
+php artisan cache:clear
+php artisan config:clear
+```
+
+## Publishing your image
+
+To deploy your project, we'll create a container image using the [Dockerfile](Dockerfile) in your repository, which specifies how to package your application and its dependencies. This image will then be published to GitLab's Container Registry where it can be accessed for deployment and evaluation. The following steps guide you through this process.
+
+You need to have Docker installed to publish your project image for deployment.
+
+**Note for ARM CPU users**: You must explicitly build an AMD64 Docker image. Follow [this guide](https://docs.docker.com/build/building/multi-platform/) to create a multi-platform builder and update your `upload_image.sh` file.
+
+You should keep your git main branch functional and regularly deploy your code as a Docker image. This image will be used to test and evaluate your project.
+
+**Important**: Before building your docker image, configure your `.env.production` file with your group's `db.fe.up.pt` credentials:
+
+```bash
+DB_CONNECTION=pgsql
+DB_HOST=db.fe.up.pt
+DB_PORT=5432
+DB_SCHEMA=lbawYYXX
+DB_DATABASE=lbawYYXX
+DB_USERNAME=lbawYYXX
+DB_PASSWORD=password
+```
+
+Images must be published to Gitlab's Container Registry, available from the side menu option `Deploy > Container Registry`.
+
+Publishing steps:
+
+1. Login to GitLab's Container Registry (using FEUP VPN/network):
+
+```bash
+docker login gitlab.up.pt:5050 # Username is upXXXXX@up.pt
+```
+
+2. Configure `upload_image.sh` with your image name:
+
+```bash
+IMAGE_NAME=gitlab.up.pt:5050/lbaw/lbawYYYY/lbawYYXX # Replace with your group's image name
+```
+
+3. Build and upload from the project's root:
+
+```bash
+./upload_image.sh
+```
+
+Maintain one image per group. All team members can update the image after logging in to GitLab's registry.
+
+
+## Testing your image
+
+After publishing, you can test your image locally using:
+
+```bash
+docker run -d --name lbawYYXX -p 8001:80 gitlab.up.pt:5050/lbaw/lbawYYYY/lbawYYXX
+```
+
+This command:
+
+* Starts a Docker container named `lbawYYXX` with your published image (`-d` runs it in the background)
+* Maps port 8001 on your machine to port 80 in the container
+* Your application will be available at `http://localhost:8001`
+
+While running your container, you can use another terminal to run a shell inside the container:
+
+```bash
+docker exec -it lbawYYXX bash
+```
+
+Inside the container you may, for example, see the content of the web server logs:
+
+```bash
+# Follow error logs
+root@2804d54698c0:/# tail -f /var/log/nginx/error.log
+
+# Follow access logs
+root@2804d54698c0:/# tail -f /var/log/nginx/access.log
+```
+
+To stop and remove the container:
+
+```bash
+docker stop lbawYYXX
+docker rm lbawYYXX
+```
+
+---
+-- LBAW, 2024

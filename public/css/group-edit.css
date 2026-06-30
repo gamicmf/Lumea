@@ -1,0 +1,190 @@
+.header-group-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.group-title {
+    text-align: center;
+    font-size: 3.5rem;
+    margin-top: 20px;
+    color: #5c3d99;
+    flex: 1;
+}
+
+.spacer {
+    width: 100px; /* Ajuste conforme necessário para equilibrar o espaço */
+}
+
+.group-navbar {
+    background-color: #ffffff; /* Fundo branco */
+    border: 2px solid #5c3d99; /* Bordas de cor #5c3d99 */
+    overflow: hidden;
+    display: flex; /* Usar flexbox para espaçamento */
+    justify-content: center; /* Centralizar itens */
+    box-sizing: border-box; /* Incluir padding e border no tamanho total */
+    margin: 20px auto; /* Espaçamento superior e inferior */
+    max-width: 600px; /* Largura máxima */
+}
+
+.group-navbar a {
+    color: #5c3d99; 
+    padding: 14px 16px;
+    text-decoration: none;
+    text-align: center; /* Centralizar texto */
+    box-sizing: border-box; /* Incluir padding e border no tamanho total */
+    margin: 0 20px; /* Espaçamento entre os links */
+    font-size: 1.2rem; /* Tamanho da fonte */
+    transition: all 0.3s ease; /* Adicionar transição suave */
+    display: flex; /* Usar flexbox para centralizar o texto */
+    align-items: center; /* Centralizar verticalmente */
+    justify-content: center; /* Centralizar horizontalmente */
+}
+
+.group-navbar a:hover {
+    background-color: #5c3d99; /* Fundo ao passar o mouse */
+    color: #ffffff; /* Cor do texto ao passar o mouse */
+}
+
+.group-navbar a.active {
+    background-color: #5c3d99; /* Fundo roxo */
+    color: #ffffff; /* Cor do texto */
+    border: 2px solid #5c3d99; /* Borda inferior para indicar seleção */
+}
+
+.edit-title {
+    font-size: 2.5rem;
+    color: #5c3d99;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.edit-group-field {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.edit-group-field label {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.edit-group-field input[type="text"],
+.edit-group-field textarea {
+    width: 80%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.save-changes-button {
+    background-color: #5c3d99;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-top: 20px;
+}
+
+.save-changes-button:hover {
+    background-color: #4a2d7d;
+}
+
+.members-title {
+    font-size: 3.3rem;
+    margin-left: 20px; /* Ajuste conforme necessário */
+    color: #5c3d99;
+}
+
+.members-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    max-width: 900px;
+    margin-left: auto; /* Centralizar a tabela */
+    margin-right: auto; /* Centralizar a tabela */
+    margin-top: 50px;
+}
+
+.members-table th, .members-table td {
+    border: 1px solid #5c3d99;
+    padding: 10px;
+    text-align: left;
+    font-size: 1.2em;
+}
+
+.members-table th {
+    background-color: #f5f5f5;
+}
+
+.members-table td {
+    background-color: #ffffff;
+}
+
+.remove-member-button {
+    background-color: #ff4d4d;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.remove-member-button:hover {
+    background-color: #ff1a1a;
+}
+
+.add-member-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.add-member-input {
+    width: 80%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.add-member-button {
+    background-color: #5c3d99;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.add-member-button:hover {
+    background-color: #4a2d7d;
+}
+
+.go-back-button {
+    display: inline-block;
+    background-color: #5c3d99;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: 2px solid #5c3d99;
+    transition: ease 0.3s;
+    margin-right: 20px;
+}
+
+.go-back-button:hover {
+    background-color: #ffffff;
+    color: #5c3d99;
+    text-decoration: none; /* Remover sublinhado ao passar o mouse */
+}

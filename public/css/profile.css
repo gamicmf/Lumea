@@ -1,0 +1,97 @@
+/* Profile Page Styles */
+.total {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile img.profile-picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.profile p {
+  margin: 5px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.followers {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.followers div {
+  flex: 1;
+  font-size: 16px;
+  color: #555;
+}
+
+.followers button {
+  margin-top: 10px;
+  padding: 8px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.followers button:hover {
+  background-color: #0056b3;
+}
+
+.text-gray-700 {
+  font-size: 14px;
+  color: #777;
+  margin: 15px 0;
+  text-align: center;
+}
+
+/* Graph Section */
+.total > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 40px;
+}
+
+.total > div img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.total > div p {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 10px;
+}
+
+.ranking {
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+  margin-top: 20px;
+}
